@@ -76,7 +76,7 @@ public class Game {
     }
 
     private void update() {
-
+this.ship.movebullet();
     }
 
     private void paint(Screen s) {
@@ -121,6 +121,9 @@ public class Game {
             }
             if (keyStroke.getKeyType() == KeyType.ArrowRight) {
                 this.ship.moveHorizontal(1, 0, Game.Columns);
+            }
+              if (keyStroke.getKeyType() == KeyType.Enter) {
+                this.ship.shoot();
             }
 
         }

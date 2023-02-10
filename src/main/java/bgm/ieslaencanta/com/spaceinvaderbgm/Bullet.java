@@ -19,6 +19,8 @@ public class Bullet {
     private TextColor color;
     private TextColor backgroundcolor;
     private TextCharacter bulletsymbol;
+    private static int tope_max = 18;
+    private int tope = tope_max;
 
     public Bullet() {
         this.posicion = new Point2D();
@@ -44,12 +46,16 @@ public class Bullet {
 
     public void paint(Screen s) {
         s.setCharacter(this.posicion.getX(), this.posicion.getY(), this.bulletsymbol);
-        
+
     }
 
     public void moveVertical(int incy, int miny, int maxy) {
-        if (this.posicion.getY() + incy >= miny && this.posicion.getY() + incy <= maxy) {
-            this.posicion.addY(incy);
+        this.tope--;
+        if (this.tope == 0) {
+            this.tope=this.tope_max;
+            if (this.posicion.getY() + incy >= miny && this.posicion.getY() + incy <= maxy) {
+                this.posicion.addY(incy);
+            }
         }
     }
 
