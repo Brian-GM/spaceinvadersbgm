@@ -31,7 +31,6 @@ public class Ship {
     public Ship() {
         this.posicion = new Point2D();
         this.bullets = new Bullet[Ship.max_bullets];
-    //  this.init();
 
     }
 
@@ -39,13 +38,11 @@ public class Ship {
         this.posicion = posicion;
         this.bullets = new Bullet[Ship.max_bullets];
 
-      //this.init();
     }
 
     public Ship(int x, int y) {
         this.posicion = new Point2D(x,y);
         this.bullets = new Bullet[Ship.max_bullets];
-           //this.init();
     }
 /*
     private void init() {
