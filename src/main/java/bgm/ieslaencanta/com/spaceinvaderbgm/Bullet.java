@@ -37,6 +37,13 @@ public class Bullet {
         this.init();
 
     }
+   /**
+     * @return the posicion
+     */
+    public Point2D getPosicion() {
+        return posicion;
+    }
+
 
     private void init() {
         this.color = TextColor.ANSI.GREEN;
@@ -45,7 +52,7 @@ public class Bullet {
     }
 
     public void paint(Screen s) {
-        s.setCharacter(this.posicion.getX(), this.posicion.getY(), this.bulletsymbol);
+        s.setCharacter(this.getPosicion().getX(), this.getPosicion().getY(), this.bulletsymbol);
 
     }
 
@@ -53,10 +60,12 @@ public class Bullet {
         this.tope--;
         if (this.tope == 0) {
             this.tope=this.tope_max;
-            if (this.posicion.getY() + incy >= miny && this.posicion.getY() + incy <= maxy) {
-                this.posicion.addY(incy);
+            if (this.getPosicion().getY() + incy >= miny && this.getPosicion().getY() + incy <= maxy) {
+                this.getPosicion().addY(incy);
             }
         }
     }
-
+    
 }
+
+ 

@@ -41,17 +41,18 @@ public class Ship {
     }
 
     public Ship(int x, int y) {
-        this.posicion = new Point2D(x,y);
+        this.posicion = new Point2D(x, y);
         this.bullets = new Bullet[Ship.max_bullets];
     }
-/*
+
+    /*
     private void init() {
         this.color = TextColor.ANSI.RED;
         this.backgroundcolor = TextColor.ANSI.BLACK;
        this.cartoon = TextCharacter.fromCharacter()[0].withForegroundColor(this.color).withBackgroundColor(this.backgroundcolor);
     }
-*/
-      /**
+     */
+    /**
      * @return the posicion
      */
     public Point2D getPosicion() {
@@ -78,45 +79,52 @@ public class Ship {
     public Bullet[] getBullets() {
         return bullets;
     }
-    
+
     public void paint(Screen s) {
         char c;
         for (int i = 0; i < this.heigth; i++) {
             for (int j = 0; j < this.width; j++) {
                 c = this.cartoon[i].charAt(j);
-                s.setCharacter(this.posicion.getX() + j, this.posicion.getY() + i, 
-                       new TextCharacter(c,TextColor.ANSI.WHITE, TextColor.ANSI.BLACK));
+                s.setCharacter(this.posicion.getX() + j, this.posicion.getY() + i,
+                        new TextCharacter(c, TextColor.ANSI.WHITE, TextColor.ANSI.BLACK));
 
             }
         }
-        for (int i=0;i<this.bullets.length;i++){
-            if (this.bullets[i]!=null){
-            this.bullets[i].paint(s);
+        for (int i = 0; i < this.bullets.length; i++) {
+            if (this.bullets[i] != null) {
+                this.bullets[i].paint(s);
             }
         }
     }
-public void shoot(){
-    this.bullets[0]=new Bullet(this.posicion.getX()+this.width/2,
-    this.posicion.getY()-1);
-    
-}
-public void movebullet(){
-   for (int i=0;i<this.bullets.length;i++){
-       if(this.bullets[i] != null){
-           this.bullets[i].moveVertical(-1, 0, Game.Rows);
 
-       }
-   }
-    
-}
+    public void shoot() {
+             boolean encontrado = false;
+        for (int i = 0; i < this.max_bullets && !encontrado == true; i++) {
+            if (this.bullets[i] == null) {
+                this.bullets[i] = new Bullet(this.posicion.getX() + this.width / 2,this.posicion.getY() - 1);
+                encontrado = true;
+            }
+        }
+    }
+
+    public void movebullet() {
+        for (int i = 0; i < this.bullets.length; i++) {
+            if (this.bullets[i] != null) {
+                this.bullets[i].moveVertical(-1, 0, Game.Rows);
+                if (this.bullets[i].getPosicion().getY() <= 0) {
+                    this.bullets[i] = null;
+                }
+            }
+        }
+
+    }
+
     public void moveHorizontal(int incX, int minX, int maxX) {
         if (this.getPosicion().getX() + incX >= minX && this.getPosicion().getX() + incX + this.getWidth() <= maxX) {
             this.getPosicion().addX(incX);
         } else {
-Toolkit.getDefaultToolkit().beep();
+            Toolkit.getDefaultToolkit().beep();
         }
     }
-
-  
 
 }

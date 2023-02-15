@@ -28,7 +28,6 @@ public class Enemy {
     private int topehorizontal = topehorizontal_max;
     private boolean vivo = true;
     private boolean bajar=false;
-    private Enemy enemy1;
     private boolean borde = true;
     private String cartoon[] = {
         "⣆⡵⣤⡴⣅⡆",

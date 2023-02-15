@@ -28,6 +28,13 @@ public class Game {
     private boolean exit_key;
     private Bullet bala;
     private Ship ship;
+    //Muros
+    private Wall walls[];
+    private Wall wall;
+    private Wall wall2;
+    private Wall wall3;
+    private Wall wall4;
+    //Enemigos fila 1
     private Enemy enemy1;
     private Enemy enemy2;
     private Enemy enemy3;
@@ -49,8 +56,6 @@ public class Game {
 
     public static int Columns = 80;
     public static int Rows = 80;
-    //  public static int FinalColumns=80;
-    // public static int FinalRows=80;
 
     public Game() {
         this.exit_key = false;
@@ -61,6 +66,11 @@ public class Game {
         } catch (IOException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
+               
+       
+        
+         
+
         bala = new Bullet(40, 12);
         ship = new Ship(38, 20);
         enemy1 = new Enemy(0, 1);
@@ -81,6 +91,7 @@ public class Game {
         enemy15 = new Enemy(55, 8);
         enemy16 = new Enemy(65, 8);
         enemy17 = new Enemy(73, 8);
+        this.CreteWalls();
 
     }
 
@@ -111,6 +122,13 @@ public class Game {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     private void CreteWalls(){
+          this.walls = new Wall[4];
+            for (int i=0;i<this.walls.length;i++){
+                this.walls[i] = new Wall (new Point2D(((i+1)*15),15));
+            }
+        }    
+    
 
     private void update() {
         this.ship.movebullet();
@@ -132,9 +150,28 @@ public class Game {
         this.enemy15.moveEnemy();
         this.enemy16.moveEnemy();
         this.enemy17.moveEnemy();
-
+        //Crear muro
+        this.collisions();
     }
 
+    public void collisions() {
+        Bullet[] ship_Bullets = this.ship.getBullets();
+        for (int i = 0; i < this.walls.length; i++) {
+            for (int j = 0; j < ship_Bullets.length; j++) {
+                if (this.walls[i] != null && ship_Bullets[j] != null) {
+                    if (this.walls[i].collision(ship_Bullets[j])) {
+                        ship_Bullets[j] = null;
+                    }
+                }
+            }
+        }
+    }
+    private void paintWalls(){
+          
+            for (int i=0;i<this.walls.length;i++){
+                this.walls[i].paint(screen );
+            }
+        }    
     private void paint(Screen s) {
         try {
             TerminalSize terminalSize = s.getTerminalSize();
@@ -163,7 +200,8 @@ public class Game {
             this.enemy15.paint2(this.screen);
             this.enemy16.paint2(this.screen);
             this.enemy17.paint2(this.screen);
-
+            //Muros
+            this.paintWalls();
             screen.refresh();
 
         } catch (IOException ex) {
